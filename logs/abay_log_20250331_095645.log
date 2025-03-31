@@ -1,0 +1,13 @@
+2025-03-31 09:56:45,959 [INFO] 📄 Logging to file: logs/abay_log_20250331_095645.log
+2025-03-31 09:56:48,329 [INFO] 🛫 Opened departure list
+2025-03-31 09:56:48,854 [INFO] ✅ Selected departure: SGN
+2025-03-31 09:56:48,925 [INFO] 🛬 Opened destination list
+2025-03-31 09:56:49,460 [INFO] ✅ Selected destination: DAD
+2025-03-31 09:56:54,805 [INFO] 🔍 Clicked search button
+2025-03-31 09:56:54,889 [INFO] ============================================================
+2025-03-31 09:56:54,890 [INFO] 📅 Collecting data for flight date: Thứ Tư
+02/04
+539,000
+2025-03-31 09:56:54,890 [INFO] ⏰ Started at: 2025-03-31 09:56:54
+2025-03-31 09:56:54,890 [INFO] Total flights found: 44
+2025-03-31 09:56:54,890 [INFO] ============================================================
