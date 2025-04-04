@@ -1,226 +1,223 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.keys import Keys
+import os
 import time
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
 import pandas as pd
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
+import argparse
+import logging
+from datetime import datetime
 import os
 
+from src.utils.driver_utils import init_driver
+from src.utils.logger_utils import setup_logger
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Tripadvisor.com.vn review crawler CLI")
 
-def retrieve_general_data(page_content): 
-    soup = BeautifulSoup(page_content, "html.parser")
+    parser.add_argument("--airline", type=str, required=True, help="Airline name(e.g. VNA, VJ, Bam ) ")
+    parser.add_argument("--driver_path", type=str, default="/usr/local/bin/chromedriver", help="Path to chromedriver")
+    parser.add_argument("--save_dir", type=str, default="data/clean", help="Directory to save flight data")
+    parser.add_argument("--headless", action="store_true", help="Run Chrome in headless mode")
 
-    time.sleep(3)
-    name = soup.find('div', class_="jIkPg G u")
+    return parser.parse_args()
 
-    phone = soup.find('div', class_="bOZAZ VNlYD")
+def extract_general_data(driver, url):
+    try:
+        logging.info("Start extracting general information about airline")
+        driver.get(url)
 
-    address = soup.find('div', class_="biGQs _P pZUbB W hmDzD")
+        html_content = driver.page_source
+        soup = BeautifulSoup(html_content, "html.parser")
+    except Exception as e:
+        logging.error("Start extracting general information about airline")
 
+    logging.info("Start extracting general information about airline")
 
-    link_element = soup.find('div', class_="jWfod u")
+    try:
+        name = soup.find('div', class_="jIkPg G u")
+        phone = soup.find('div', class_="bOZAZ VNlYD")
+        address = soup.find('div', class_="biGQs _P pZUbB W hmDzD")
+        link_element = soup.find('div', class_="jWfod u")
+        average_rating = soup.find('span', class_="ammfn")
 
+        attributes = {}
+        attribute_elements = soup.find_all('div', class_='lVVcb')
+        for ele in attribute_elements:
+            name_attribute = ele.find('span', class_='exvvN').text if ele.find('span', class_='exvvN') else ''
+            rate = ele.find('span', class_='RkhSR').text if ele.find('span', class_='RkhSR') else ''
+            attributes[name_attribute] = rate
+
+        total_review = soup.find('div', class_="biGQs _P fiohW uuBRH")
+        total_ratings = {}
+        rating_elements = soup.find_all('div', class_="jxnKb")
+        for rating_element in rating_elements:
+            name_rating = rating_element.find('div', class_='Ygqck o W q').text if rating_element.find('div', class_='Ygqck o W q') else ''
+            count = rating_element.find('div', class_='biGQs _P fiohW biKBZ osNWb').text if rating_element.find('div', class_='biGQs _P fiohW biKBZ osNWb') else ''
+            total_ratings[name_rating] = count
+
+        popular_mentions_elements = soup.find('div', class_="TuqGj")
+        popular_mentions = [element.text for element in popular_mentions_elements.find_all('span', class_="_T")]
+
+        logging.info("✅ Finishing extracting information")
+        return {
+            "Name": name.text if name else "Not found",
+            "Phone": phone.text if phone else "Not found",
+            "Address": address.text if address else "Not found",
+            "Website": [link['href'] for link in link_element.find_all('a', href=True) if 'http://' in link['href']] if link_element else "Not found",
+            "Average Rating": average_rating.text if average_rating else "Not found",
+            "Total Review": total_review.text if total_review else "Not found",
+            "Popular Mentions": popular_mentions,
+            "Attributes": attributes,
+            "Total Ratings": total_ratings
+        }
+    except Exception as e: 
+        logging.error(f"❌ Error occur when extracting information : {e}")
     
 
+def save_general_data(data, file_path, file_name):
+    logging.info(f"Start saving data into {file_path}/{file_name}")
 
-    average_rating = soup.find('span', class_="ammfn")
-
-    attributes = {}
-    table = soup.find('div', class_ = "lVVcb")
-    attribute_elements = table.find_all('div')
-    for ele in attribute_elements: 
-        name_attribute = (ele.find('span',class_='exvvN').text)
-        rate = (ele.find('span',class_='RkhSR').text)
-        attributes[name_attribute]=  rate
-
-
-    total_review = soup.find('div', class_="biGQs _P fiohW uuBRH")
-
-
-
-    total_ratings = {}
-    rating_table = soup.find('div', class_="AugPH w u")
-
-    rating_elements = rating_table.find_all('div',class_="jxnKb")
-    for rating_element in rating_elements: 
-        name_rating = (rating_element.find('div',class_='Ygqck o W q').text)
-        count = (rating_element.find('div',class_='biGQs _P fiohW biKBZ osNWb').text)
-        total_ratings[name_rating]=  count
-
-
-    popular_mentions_elements = soup.find('div', class_="TuqGj")
-    popular_mentions = []
-    for element in popular_mentions_elements.find_all('span',class_="_T"): 
-        popular_mentions.append(element.text)
-
-    file_path = 'data/overall/bamboo_general_info.txt'
     directory = os.path.dirname(file_path)
+
     if not os.path.exists(directory):
         os.makedirs(directory)
-    with open(file_path,"a") as file :
-        if name : 
-            file.write(f"Name: {name.text}\n")
-        else : 
-            file.write(f"Name: Not found\n")
 
-        if phone : 
-            file.write(f"Phone: {phone.text}\n")
-        else : 
-            file.write(f"Phone: Not found\n")
+    try:
+        with open(f"{file_path}/{file_name}", "a") as file:
+            file.write(f"Name: {data['Name']}\n")
+            file.write(f"Phone: {data['Phone']}\n")
+            file.write(f"Address: {data['Address']}\n")
+            file.write(f"Website: {', '.join(data['Website'])}\n" if data['Website'] != "Not found" else "Website: Not found\n")
+            file.write(f"Average Rating: {data['Average Rating']}\n")
+            file.write(f"Total Review: {data['Total Review']}\n")
+            file.write(f"Popular Mention: {data['Popular Mentions']}\n")
+            file.write(f"Attributes: {data['Attributes']}\n")
+            file.write(f"Total Rating: {data['Total Ratings']}\n")
 
-        if address : 
-            file.write(f"Address: {address.text}\n")
-        else : 
-            file.write(f"Address: Not found\n")
+        logging.info(f"✅ Finishing saving data into {file_path}/{file_name}")
+    except Exception as e:
+        logging.error(f"❌ Error when saving file {file_path}/{file_name}: {e}")
 
-        if link_element:
-            for link in link_element.find_all('a',href=True) :
-                if 'http://' in link['href']:  
-                    file.write(f"Website: {link['href']}\n")
-        else:
-            file.write(f"Website: Not found\n")
+    return
 
-        if average_rating : 
-            file.write(f"Average Rating: {average_rating.text}\n")
-        else : 
-            file.write(f"Average Rating: Not found\n")
+def extract_reviews_1page(soup, page_number):
+    logging.info(f"Starting extracting review data from page {page_number}")
+    try:
+        reviews_data = []
+        review_elements = soup.find_all('div', class_="lwGaE A")
+        for review_element in review_elements:
+            rating = review_element.find("svg", class_="UctUV d H0").text if review_element.find("svg", class_="UctUV d H0") else ''
+            title = review_element.find("div", class_="biGQs _P fiohW uuBRH").text if review_element.find("div", class_="biGQs _P fiohW uuBRH") else ''
+            full_review = review_element.find("span", class_="JguWG").text if review_element.find("span", class_="JguWG") else ''
+            information = review_element.find_all("div", class_="biGQs _P pZUbB hmDzD")[1].text if len(review_element.find_all("div", class_="biGQs _P pZUbB hmDzD")) > 1 else None
 
-        if total_review : 
-            file.write(f"Total review: {total_review.text}\n")
-        else : 
-            file.write(f"Total review: Not found\n")
+            review_dict = {
+                "Rating": rating,
+                "Title": title,
+                "Full Review": full_review,
+                "Information": information
+            }
 
-        file.write(f"Popular mention: [")
-        for popular_mention in popular_mentions[:-1]:
-            file.write(f"{popular_mention}, ")
-        file.write(f"{popular_mentions[-1]}")
-        file.write(f"]\n")
-
-
-
-        file.write("Attributes: {")
-        for i, key in enumerate(attributes.keys()):
-            if i < len(attributes) - 1:
-                file.write(f"'{key}': '{attributes[key]}', ")
+            service_rating_table = review_element.find('div', class_="JxiyB f")
+            if service_rating_table:
+                service_ratings = []
+                for element in service_rating_table.find_all('div', class_="msVPq"):
+                    service_rating = element.find('svg', class_='UctUV d H0').text if element.find('svg', class_='UctUV d H0') else ''
+                    service_info = element.find('div', class_='biGQs _P pZUbB osNWb').text if element.find('div', class_='biGQs _P pZUbB osNWb') else ''
+                    service_ratings.append({"Service Rating": service_rating, "Service Info": service_info})
+                review_dict["Service Ratings"] = service_ratings
             else:
-                file.write(f"'{key}': '{attributes[key]}'")
-        file.write("}\n")
+                review_dict["Service Ratings"] = None
 
-
-        file.write("Total rating: {")
-        for i, key in enumerate(total_ratings.keys()):
-            if i < len(total_ratings) - 1:
-                file.write(f"'{key}': '{total_ratings[key]}', ")
-            else:
-                file.write(f"'{key}': '{total_ratings[key]}'")
-        file.write("}\n")
-
-
-    
-
-
-def retrive_review_data(page_content) : 
-    soup = BeautifulSoup(page_content, "html.parser")
-    
-    reviews_data = []
-
-
-    review_elements = soup.find_all('div',class_="lwGaE A")
-    for review_element in review_elements:
-        rating = review_element.find("svg",class_="UctUV d H0").text
-        title = review_element.find("div",class_ = "biGQs _P fiohW uuBRH").text
-        full_review = review_element.find("span",class_ = "JguWG").text
-        information_ele = review_element.find_all("div",class_ = "biGQs _P pZUbB hmDzD")
-        if len(information_ele) > 1 : 
-            information = information_ele[1].text
-        else : 
-            information = None
-        review_dict = {
-            "Rating": rating,
-            "Title": title,
-            "Full Review": full_review,
-            "Information": information,
-        }
-
-        service_rating_table = review_element.find('div',class_= "JxiyB f")
-        if service_rating_table is not None:
-            elements = service_rating_table.find_all('div',class_="msVPq")
-            service_ratings = []
-            for element in elements: 
-                service_rating = element.find('svg', class_='UctUV d H0').text
-                service_info = element.find('div', class_='biGQs _P pZUbB osNWb').text
-                service_ratings.append({"Service Rating": service_rating, "Service Info": service_info})
-            review_dict["Service Ratings"] = service_ratings
-        else :
-            review_dict["Service Ratings"] = None
-
-        reviews_data.append(review_dict)
-    return reviews_data
+            reviews_data.append(review_dict)
+        logging.info(f"✅ Finishing extracting review in page {page_number}")
+        return reviews_data
+    except Exception as e :
+        logging.error(f"❌ Error when extracting review in page {page_number}: {e}")
 
 
 
-def get_all_review_page(page_content) : 
-    all_page_review_data = []
-    browser.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-    page_1_review = retrive_review_data(page_content)
-
-
-    all_page_review_data.extend(page_1_review)
-
-    while True :
-        try: 
-            next_button = browser.find_element(By.XPATH, "//button[@aria-label='Next page']")
-        except Exception as e :
-            next_button = None
-            print(e)
-        if next_button is None : 
-            print("There is no button")
-            break
-        print(next_button)
-        browser.execute_script("arguments[0].scrollIntoView(true);", next_button)
-        next_button.click()
-        print("There is new page")
-        time.sleep(4)
-        
-        updated_html_content = browser.page_source
-        next_review_data = retrive_review_data(updated_html_content)
-        all_page_review_data.extend(next_review_data)
-
-        print(f"Total reviews collected: {len(all_page_review_data)}")
-
-    df = pd.DataFrame(all_page_review_data)
-
-
-    df.to_csv("data/review/bamboo_all_reviews_data.csv", index=False, encoding="utf-8")
-
-    print("All reviews have been saved to 'bamboo_all_reviews_data.csv'.")
-
-if __name__ == "__main__" : 
-    driver_path = "/usr/local/bin/chromedriver"
-
-    options = Options()
-
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
-
-    service = Service(driver_path)
-    browser = webdriver.Chrome(service=service, options=options)
-
-    # url = "https://www.tripadvisor.com/Airline_Review-d8728891-Reviews-VietJetAir"
-    # url = "https://www.tripadvisor.com/Airline_Review-d8729180-Reviews-Vietnam-Airlines"
-    url = "https://www.tripadvisor.com/Airline_Review-d17550096-Reviews-Bamboo-Airways"
-    browser.get(url)
-
-
+def get_all_reviews(driver, url):
+    driver.get(url)
     time.sleep(5)  
+    page_number = 1
+    all_reviews = []
+    while True:
+        logging.info(f"Start crawling review in page {page_number}")
+        crawl_start_time = datetime.now()
+        page_reviews = extract_reviews_1page(BeautifulSoup(driver.page_source, "html.parser"), page_number)
+        all_reviews.extend(page_reviews)
+        try:
+            next_button = WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Next page']"))
+            )
+            driver.execute_script("arguments[0].scrollIntoView(true);", next_button)
+            next_button.click()
+            time.sleep(4)  
+        except Exception:
+            print("No more pages available.")
+            break
+        crawl_end_time = datetime.now()
+        logging.info(f"Finish crawling review in page {page_number}")
+        logging.info("✅ Ended at: %s | Duration: %ds",
+                     crawl_end_time.strftime('%Y-%m-%d %H:%M:%S'), (crawl_end_time - crawl_start_time).seconds)
+        logging.info("=" * 60)
+        page_number += 1
+    return all_reviews
 
 
-    html_content = browser.page_source
-    retrieve_general_data(html_content)
-    get_all_review_page(html_content)
+def save_review_data(all_reviews, file_path, file_name) :
+    try:
+        reviews_df = pd.DataFrame(all_reviews)
+        reviews_df.to_csv(f"{file_path}/{file_name}", index=False, encoding="utf-8")
+        logging.info(f"✅ Finishing saving review data in {file_path}/{file_name}")
+    except Exception as e :
+        logging.error(f"❌ Error when saving review data in {file_path}/{file_name}: {e}")
 
-    time.sleep(5)
+def main(driver, airline_name, save_dir):
 
-    browser.quit()
+    url = None
+    if airline_name.lower() == 'vna':
+        url = "https://www.tripadvisor.com/Airline_Review-d8729180-Reviews-Vietnam-Airlines"
+    elif airline_name.lower() == 'vj' :
+        url = "https://www.tripadvisor.com/Airline_Review-d8728891-Reviews-VietJetAir"
+    elif airline_name.lower() == 'bam': 
+        url = "https://www.tripadvisor.com/Airline_Review-d17550096-Reviews-Bamboo-Airways"
+    else :
+        logging.info(f"Cannot find review about airline: {airline_name}")
+        return 
+    
+    
+
+    # Step 1 : Extract general information about airline
+    general_data = extract_general_data(driver, url)
+    file_general_name = f"{airline_name.lower()}_general_info.txt"
+    save_general_data(general_data, save_dir, file_general_name)
+
+    # Step 2 : Extract review data about airline
+    all_reviews = get_all_reviews(driver, url)
+    file_review_name = f"{airline_name.lower()}_all_reviews_data.csv"
+    save_review_data(all_reviews, save_dir, file_review_name)
+
+    logging.info("Finish crawling phase")
+    driver.quit()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    setup_logger(log_dir="logs")
+    driver = init_driver(driver_path=args.driver_path, headless=args.headless)
+
+    main(driver=driver,
+                  airline_name=args.airline,
+                  save_dir=args.save_dir,
+                  )
+    
+#    PYTHONPATH=. python src/crawler/airline_review.py --airline VJ  --save_dir data/raw --headless
+#    PYTHONPATH=. python src/crawler/airline_review.py --airline VNA --save_dir data/raw --headless
+#    PYTHONPATH=. python src/crawler/airline_review.py --airline Bam --save_dir data/raw --headless
+
+
+    
