@@ -27,7 +27,8 @@ def extract_general_data(driver, url):
     try:
         logging.info("Start extracting general information about airline")
         driver.get(url)
-
+        driver.execute_script("window.scrollBy(0, 1000);")
+        time.sleep(5)
         html_content = driver.page_source
         soup = BeautifulSoup(html_content, "html.parser")
     except Exception as e:
@@ -43,13 +44,13 @@ def extract_general_data(driver, url):
         average_rating = soup.find('span', class_="ammfn")
 
         attributes = {}
-        attribute_elements = soup.find_all('div', class_='lVVcb')
+        attribute_elements = soup.find_all('div', class_='HWAlD TQNLQ')
         for ele in attribute_elements:
             name_attribute = ele.find('span', class_='exvvN').text if ele.find('span', class_='exvvN') else ''
             rate = ele.find('span', class_='RkhSR').text if ele.find('span', class_='RkhSR') else ''
             attributes[name_attribute] = rate
 
-        total_review = soup.find('div', class_="biGQs _P fiohW uuBRH")
+        total_review = soup.find('span', class_="SSkub")
         total_ratings = {}
         rating_elements = soup.find_all('div', class_="jxnKb")
         for rating_element in rating_elements:
@@ -65,7 +66,7 @@ def extract_general_data(driver, url):
             "Name": name.text if name else "Not found",
             "Phone": phone.text if phone else "Not found",
             "Address": address.text if address else "Not found",
-            "Website": [link['href'] for link in link_element.find_all('a', href=True) if 'http://' in link['href']] if link_element else "Not found",
+            "Website": [link['href'] for link in link_element.find_all('a', href=True) if 'http' in link['href']] if link_element else "Not found",
             "Average Rating": average_rating.text if average_rating else "Not found",
             "Total Review": total_review.text if total_review else "Not found",
             "Popular Mentions": popular_mentions,
@@ -74,6 +75,7 @@ def extract_general_data(driver, url):
         }
     except Exception as e: 
         logging.error(f"❌ Error occur when extracting information : {e}")
+    
     
 
 def save_general_data(data, file_path, file_name):
@@ -215,9 +217,9 @@ if __name__ == "__main__":
                   save_dir=args.save_dir,
                   )
     
-#    PYTHONPATH=. python src/crawler/airline_review.py --airline VJ  --save_dir data/raw --headless
-#    PYTHONPATH=. python src/crawler/airline_review.py --airline VNA --save_dir data/raw --headless
-#    PYTHONPATH=. python src/crawler/airline_review.py --airline Bam --save_dir data/raw --headless
+#    PYTHONPATH=. python src/crawler/airline_review.py --airline VJ --driver_path "../chromedriver-win64/chromedriver.exe" --save_dir data/raw --headless
+#    PYTHONPATH=. python src/crawler/airline_review.py --driver_path VNA "../chromedriver-win64/chromedriver.exe" --save_dir data/raw --headless
+#    PYTHONPATH=. python src/crawler/airline_review.py --driver_path Bam"../chromedriver-win64/chromedriver.exe" --save_dir data/raw --headless
 
 
     

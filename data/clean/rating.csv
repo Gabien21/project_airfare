@@ -1,0 +1,16 @@
+,airline_id,rate_name,count
+0,0,Excellent,632
+1,0,Good,948
+2,0,Average,731
+3,0,Poor,573
+4,0,Terrible,"4,035"
+5,1,Excellent,"2,556"
+6,1,Good,"3,004"
+7,1,Average,"1,465"
+8,1,Poor,606
+9,1,Terrible,939
+10,2,Excellent,111
+11,2,Good,56
+12,2,Average,20
+13,2,Poor,40
+14,2,Terrible,337

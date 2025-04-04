@@ -1,8 +1,9 @@
 Name: Bamboo Airways
 Phone: 011 84 1900 1166
 Address: Headquarters: 265 Cau Giay Street, Bamboo Airways Tower, Dich Vong Ward, Cau Giay District, Quy Nhon Vietnam
+Website: https://www.bambooairways.com/en/
 Average Rating: 2.0
-Total review: Reviews (564)
-Popular mention: [phu quoc, ho chi minh, seating layout, wouldn t hesitate, food on offer, sandwich, service offered, bad reviews, affordable price, food beverage, from london gatwick, budget airline, light meal, great choice, great value for money, business class passengers, full refund, fish, hot meal, full service, great experience, great customer service, be honest, return journey, doesn t, decoration, sgn, saigon, escort, econ]
-Attributes: {'Legroom': '3.0 of 5 bubbles', 'Seat comfort': '3.0 of 5 bubbles', 'In-flight entertainment (WiFi, TV, movies)': '2.0 of 5 bubbles', 'Onboard Experience': '3.0 of 5 bubbles', 'Customer service': '2.5 of 5 bubbles', 'Value for money': '3.0 of 5 bubbles', 'Cleanliness': '3.0 of 5 bubbles', 'Check-in and boarding': '3.0 of 5 bubbles', 'Food and beverage': '2.5 of 5 bubbles'}
-Total rating: {'Excellent': '111', 'Good': '56', 'Average': '20', 'Poor': '40', 'Terrible': '337'}
+Total Review: 564 reviews
+Popular Mention: ['phu quoc', 'ho chi minh', 'seating layout', 'wouldn t hesitate', 'food on offer', 'sandwich', 'service offered', 'bad reviews', 'affordable price', 'food beverage', 'from london gatwick', 'budget airline', 'light meal', 'great choice', 'great value for money', 'business class passengers', 'full refund', 'fish', 'hot meal', 'full service', 'great experience', 'great customer service', 'be honest', 'return journey', 'doesn t', 'decoration', 'sgn', 'saigon', 'escort', 'econ']
+Attributes: {'Legroom': '3.0 of 5 bubbles', 'Seat comfort': '3.0 of 5 bubbles', 'In-flight entertainment (WiFi, TV, movies)': '2.0 of 5 bubbles', 'Onboard Experience': '3.0 of 5 bubbles', 'Customer service': '2.5 of 5 bubbles', 'Value for money': '3.0 of 5 bubbles', 'Cleanliness': '3.0 of 5 bubbles', 'Check-in and boarding': '3.0 of 5 bubbles'}
+Total Rating: {'Excellent': '111', 'Good': '56', 'Average': '20', 'Poor': '40', 'Terrible': '337'}
