@@ -10,7 +10,6 @@ import traceback
 import logging
 from tqdm import tqdm
 import argparse
-import logging
 from datetime import datetime
 import os
 
