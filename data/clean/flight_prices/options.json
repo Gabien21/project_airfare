@@ -1,0 +1,1212 @@
+{
+    "Departure Location": [
+        "TP Hồ Chí Minh"
+    ],
+    "Arrival Location": [
+        "Hà Nội",
+        "Đà Nẵng"
+    ],
+    "Aircraft Type": [
+        "Airbus A321",
+        "Airbus A320",
+        "Boeing 787",
+        "320B",
+        "Airbus A330",
+        "Airbus A350",
+        "Airbus A359"
+    ],
+    "Passenger Type": [
+        "Người lớn"
+    ],
+    "Airline": [
+        "Bamboo Airways",
+        "Vietjet Air",
+        "Vietravel Airlines",
+        "Vietnam Airlines",
+        "Pacific Airlines"
+    ],
+    "Departure Location Code": [
+        "SGN"
+    ],
+    "Arrival Location Code": [
+        "HAN",
+        "DAD"
+    ],
+    "Flight Duration": {
+        "min": {
+            "Hà Nội": 2.0,
+            "Đà Nẵng": 1.25
+        },
+        "max": {
+            "Hà Nội": 2.25,
+            "Đà Nẵng": 1.5
+        }
+    },
+    "Refund Policy": {
+        "Bamboo Airways": {
+            "BUSINESSFLEX": [
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên"
+            ],
+            "BUSINESSSMART": [
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Miễn phí chọn chỗ trước",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                null
+            ],
+            "ECONOMYFLEX": [
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé mất phí"
+            ],
+            "ECONOMYSMART": [
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                null,
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá"
+            ]
+        },
+        "Pacific Airlines": {
+            "B": [
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi tên mất phí"
+            ],
+            "C": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí quầy ưu tiên"
+            ],
+            "D": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí chọn chỗ trước",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi tên mất phí",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí quầy ưu tiên",
+                null
+            ],
+            "E": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "H": [
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên"
+            ],
+            "I": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi vé miễn phí",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "J": [
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Không áp dụng đổi tên"
+            ],
+            "K": [
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Không áp dụng đổi tên",
+                "Miễn phí chọn chỗ trước",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi tên mất phí",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá"
+            ],
+            "L": [
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV"
+            ],
+            "M": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí"
+            ],
+            "N": [
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí chọn chỗ trước",
+                "Miễn phí phòng chờ BSV"
+            ],
+            "Q": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí phòng chờ BSV"
+            ],
+            "R": [
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                null
+            ],
+            "S": [
+                "Miễn phí phòng chờ BSV"
+            ],
+            "T": [
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng đổi tên mất phí"
+            ]
+        },
+        "Vietjet Air": {
+            "A1_ECO": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                null,
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế"
+            ],
+            "B1_ECO": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                null,
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "C_BOSS": [
+                "Áp dụng đổi vé mất phí"
+            ],
+            "C_Boss": [
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá"
+            ],
+            "D_Boss": [
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Miễn phí quầy ưu tiên"
+            ],
+            "E1_ECO": [
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí"
+            ],
+            "H1_ECO": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "I1_ECO": [
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "J1_ECO": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                null
+            ],
+            "K1_ECO": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí quầy ưu tiên"
+            ],
+            "L1_ECO": [
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Miễn phí quầy ưu tiên",
+                null
+            ],
+            "M1_ECO": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV"
+            ],
+            "N1_ECO": [
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí quầy ưu tiên"
+            ],
+            "O1_ECO": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên"
+            ],
+            "Q1_ECO": [
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí quầy ưu tiên"
+            ],
+            "R1_ECO": [
+                "Áp dụng hoàn vé mất phí"
+            ],
+            "T1_ECO": [
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá"
+            ],
+            "U1_ECO": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                null
+            ],
+            "W1_ECO": [
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí chọn ghế",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng đổi vé miễn phí",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                null,
+                "Miễn phí chọn chỗ trước"
+            ],
+            "Z1_ECO": [
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                null,
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế"
+            ]
+        },
+        "Vietnam Airlines": {
+            "B": [
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế"
+            ],
+            "C": [
+                "Miễn phí chọn ghế",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Miễn phí chọn chỗ trước",
+                null,
+                "Áp dụng đổi tên mất phí"
+            ],
+            "D": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Miễn phí chọn chỗ trước",
+                null,
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế"
+            ],
+            "E": [
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí chọn ghế"
+            ],
+            "H": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi vé miễn phí",
+                null
+            ],
+            "I": [
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                null
+            ],
+            "J": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                null,
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "K": [
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                null,
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "L": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "M": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi tên mất phí"
+            ],
+            "N": [
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                null
+            ],
+            "Q": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá"
+            ],
+            "R": [
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí chọn ghế",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí quầy ưu tiên"
+            ],
+            "S": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                "Miễn phí chọn ghế"
+            ],
+            "T": [
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí chọn chỗ trước",
+                null,
+                "Miễn phí chọn ghế"
+            ],
+            "U": [
+                "Không áp dụng đổi tên",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé miễn phí",
+                "Miễn phí quầy ưu tiên"
+            ],
+            "W": [
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí phòng chờ BSV"
+            ]
+        },
+        "Vietravel Airlines": {
+            "C": [
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí phòng chờ BSV"
+            ],
+            "D": [
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé mất phí"
+            ],
+            "E": [
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí",
+                null,
+                "Miễn phí phòng chờ BSV",
+                "Không áp dụng đổi tên",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng đổi vé miễn phí"
+            ],
+            "H": [
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Không áp dụng đổi tên",
+                "Miễn phí chọn chỗ trước",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Áp dụng đổi tên mất phí",
+                "Miễn phí quầy ưu tiên"
+            ],
+            "K": [
+                "Áp dụng đổi vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng hoàn vé mất phí",
+                "Không áp dụng đổi tên"
+            ],
+            "L": [
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Miễn phí chọn ghế",
+                "Miễn phí quầy ưu tiên"
+            ],
+            "M": [
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí quầy ưu tiên",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé mất phí",
+                "Không áp dụng đổi tên"
+            ],
+            "N": [
+                "Miễn phí quầy ưu tiên",
+                "Không áp dụng đổi tên",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí phòng chờ BSV",
+                "Áp dụng đổi vé mất phí",
+                "Áp dụng đổi vé miễn phí, thu chênh lệch giá",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "O": [
+                "Áp dụng hoàn vé mất phí",
+                "Áp dụng đổi vé mất phí"
+            ],
+            "Q": [
+                "Áp dụng đổi vé mất phí"
+            ],
+            "R": [
+                "Miễn phí quầy ưu tiên",
+                "Áp dụng hoàn vé mất phí",
+                "Miễn phí chọn chỗ trước"
+            ],
+            "S": [
+                "Miễn phí quầy ưu tiên"
+            ],
+            "T": [
+                "Không áp dụng đổi tên"
+            ]
+        }
+    },
+    "Baggage": {
+        "Bamboo Airways": {
+            "BUSINESSFLEX": {
+                "carry_on": [
+                    14
+                ],
+                "checked": [
+                    40.0
+                ]
+            },
+            "BUSINESSSMART": {
+                "carry_on": [
+                    14
+                ],
+                "checked": [
+                    40.0
+                ]
+            },
+            "ECONOMYFLEX": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    20.0
+                ]
+            },
+            "ECONOMYSMART": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            }
+        },
+        "Pacific Airlines": {
+            "B": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "C": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    32.0
+                ]
+            },
+            "D": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    32.0
+                ]
+            },
+            "E": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "H": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "I": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    32.0
+                ]
+            },
+            "J": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    32.0
+                ]
+            },
+            "K": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "L": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "M": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "N": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "Q": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "R": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "S": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "T": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    23.0
+                ]
+            }
+        },
+        "Vietjet Air": {
+            "A1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "B1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "C_BOSS": {
+                "carry_on": [
+                    18
+                ],
+                "checked": [
+                    40.0
+                ]
+            },
+            "C_Boss": {
+                "carry_on": [
+                    18
+                ],
+                "checked": [
+                    40.0
+                ]
+            },
+            "D_Boss": {
+                "carry_on": [
+                    18
+                ],
+                "checked": [
+                    40.0
+                ]
+            },
+            "E1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "H1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "I1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "J1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "K1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "L1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "M1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "N1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "O1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "Q1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "R1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "T1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "U1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "W1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "Z1_ECO": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            }
+        },
+        "Vietnam Airlines": {
+            "B": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "C": {
+                "carry_on": [
+                    18
+                ],
+                "checked": [
+                    32.0
+                ]
+            },
+            "D": {
+                "carry_on": [
+                    18
+                ],
+                "checked": [
+                    32.0
+                ]
+            },
+            "E": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "H": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "I": {
+                "carry_on": [
+                    18
+                ],
+                "checked": [
+                    32.0
+                ]
+            },
+            "J": {
+                "carry_on": [
+                    18
+                ],
+                "checked": [
+                    32.0
+                ]
+            },
+            "K": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "L": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "M": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "N": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "Q": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "R": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "S": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "T": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "U": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            },
+            "W": {
+                "carry_on": [
+                    10
+                ],
+                "checked": [
+                    23.0
+                ]
+            }
+        },
+        "Vietravel Airlines": {
+            "C": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "D": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "E": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "H": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "K": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "L": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "M": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "N": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "O": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "Q": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "R": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "S": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            },
+            "T": {
+                "carry_on": [
+                    7
+                ],
+                "checked": [
+                    null
+                ]
+            }
+        }
+    }
+}

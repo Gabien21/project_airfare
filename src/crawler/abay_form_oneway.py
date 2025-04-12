@@ -3,15 +3,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 import pandas as pd
 import time
 import os
 import traceback
+
 import logging
 from tqdm import tqdm
 import argparse
-from datetime import datetime
-import os
 
 from src.utils.driver_utils import init_driver
 from src.utils.logger_utils import setup_logger
@@ -34,7 +34,7 @@ def select_departure(driver, code):
         input_box = driver.find_element(By.ID, "cphMain_ctl00_usrSearchFormD2_txtFrom")
         input_box.click()
         input_box.clear()
-        logging.info("🛫 Opened departure list")
+        logging.info("Opened departure list")
 
         airport = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, f"//div[@id='list-departure']//a[@airportcode='{code}']"))
@@ -42,15 +42,15 @@ def select_departure(driver, code):
         driver.execute_script("arguments[0].scrollIntoView(true);", airport)
         time.sleep(0.5)
         driver.execute_script("arguments[0].click();", airport)
-        logging.info(f"✅ Selected departure: {code}")
+        logging.info(f"Selected departure: {code}")
     except Exception as e:
-        logging.error(f"❌ Error selecting departure {code}: {e}")
+        logging.error(f"Error selecting departure {code}: {e}")
 
 def select_destination(driver, code):
     try:
         input_box = driver.find_element(By.ID, "cphMain_ctl00_usrSearchFormD2_txtTo")
         input_box.click()
-        logging.info("🛬 Opened destination list")
+        logging.info("Opened destination list")
 
         airport = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, f"//div[@id='list-arrival']//a[@airportcode='{code}']"))
@@ -58,9 +58,9 @@ def select_destination(driver, code):
         driver.execute_script("arguments[0].scrollIntoView(true);", airport)
         time.sleep(0.5)
         driver.execute_script("arguments[0].click();", airport)
-        logging.info(f"✅ Selected destination: {code}")
+        logging.info(f"Selected destination: {code}")
     except Exception as e:
-        logging.error(f"❌ Error selecting destination {code}:", e)
+        logging.error(f"Error selecting destination {code}:", e)
 
 def select_departure_date(driver, date_str):
     try:
@@ -80,9 +80,9 @@ def select_departure_date(driver, date_str):
         time.sleep(2)
         day_btn = driver.find_element(By.XPATH, f"//td[contains(@onclick, '_selectDay') and contains(@onclick, '{target.month-1},2025')]//span[@class='ui-datepicker-day' and text()='{target.day}']")
         day_btn.click()
-        logging.info(f"📅 Selected departure date: {date_str}")
+        logging.info(f"Selected departure date: {date_str}")
     except Exception as e:
-        logging.error(f"❌ Error selecting departure date {date_str}:", e)
+        logging.error(f"Error selecting departure date {date_str}:", e)
 
 def choose_next_day(driver):
     try:
@@ -90,9 +90,9 @@ def choose_next_day(driver):
         next_day = today.find_element(By.XPATH, "following-sibling::li[1]")
         next_day.click()
         time.sleep(2)
-        logging.info("➡️ Switched to next day")
+        logging.info("Switched to next day")
     except Exception as e:
-        logging.error("❌ Cannot switch to next day:", e)
+        logging.error("Cannot switch to next day:", e)
 
 def get_flight_prices(driver):
     try:
@@ -127,8 +127,8 @@ def get_flight_prices(driver):
         flight_date_text = current_day_element.text.strip()
 
         logging.info("="*60)
-        logging.info("📅 Collecting data for flight date: %s", flight_date_text)
-        logging.info("⏰ Started at: %s", crawl_start_time.strftime('%Y-%m-%d %H:%M:%S'))
+        logging.info("Collecting data for flight date: %s", flight_date_text.replace("\n", " "))
+        # logging.info("Started at: %s", crawl_start_time.strftime('%Y-%m-%d %H:%M:%S'))
         logging.info("Total flights found: %d", total_flights)
         logging.info("="*60)
 
@@ -136,7 +136,7 @@ def get_flight_prices(driver):
         time.sleep(3)
 
 
-        for idx in tqdm(range(total_flights), desc="✈️ Crawling flights", unit="flight"):
+        for idx in tqdm(range(total_flights), desc="Crawling flights", unit="flight"):
             try:
                 row = WebDriverWait(driver, 10).until(
                     EC.presence_of_all_elements_located((By.CLASS_NAME, "i-result"))
@@ -202,27 +202,29 @@ def get_flight_prices(driver):
                 ])
 
                 success_count += 1
-                # logging.info("✓ Flight %d/%d - %s collected successfully.", idx+1, total_flights, flight_number)
+                # logging.info("Flight %d/%d - %s collected successfully.", idx+1, total_flights, flight_number)
             except Exception as e:
-                logging.warning("✗ Failed to collect flight %d/%d: %s", idx+1, total_flights, e)
+                logging.warning("Failed to collect flight %d/%d: %s", idx+1, total_flights, e)
                 traceback.print_exc()
                 continue
 
         crawl_end_time = datetime.now()
         logging.info("→ %d/%d flights collected successfully.", success_count, total_flights)
-        logging.info("✅ Ended at: %s | Duration: %ds",
-                     crawl_end_time.strftime('%Y-%m-%d %H:%M:%S'), (crawl_end_time - crawl_start_time).seconds)
+        # logging.info("Ended at: %s | Duration: %ds",
+        #              crawl_end_time.strftime('%Y-%m-%d %H:%M:%S'), (crawl_end_time - crawl_start_time).seconds)
         logging.info("=" * 60)
 
         return pd.DataFrame(flights_data, columns=columns)
 
     except Exception as e:
-        logging.exception("❌ Top-level error in get_flight_prices")
+        logging.exception("Top-level error in get_flight_prices")
         traceback.print_exc()
         return pd.DataFrame()
 
 
-def craw_pipeline(driver, url, departure, destination, date_str, end_date_str=None, save_dir=None):
+def craw_pipeline(departure, destination, date_str, end_date_str=None, save_dir=None):
+    url = "https://www.abay.vn"
+    driver = init_driver(headless=True)
     driver.get(url)
     time.sleep(1)
     select_departure(driver, departure)
@@ -232,47 +234,70 @@ def craw_pipeline(driver, url, departure, destination, date_str, end_date_str=No
     try:
         search_btn = driver.find_element(By.ID, "cphMain_ctl00_usrSearchFormD2_btnSearch")
         search_btn.click()
-        logging.info("🔍 Clicked search button")
+        logging.info("Clicked search button")
     except Exception as e:
-        logging.error("❌ Cannot click search button:", e)
+        logging.error("Cannot click search button:", e)
         return
     
     os.makedirs(save_dir, exist_ok=True)
-    output_file = os.path.join(save_dir, f"flight_prices_{departure}_to_{destination}.csv")
+    save_path = os.path.join(save_dir, datetime.now().strftime("%d_%m_%Y"))
+    os.makedirs(save_path, exist_ok=True)
+    output_file = os.path.join(save_path, f"flight_prices_{departure}_to_{destination}.csv")
     file_exists = os.path.exists(output_file)
 
     while True:
         df = get_flight_prices(driver)
         if df.empty:
-            logging.info("⚠️ No data, skipping...")
+            logging.info("No data, skipping...")
         else:
             flight_date = datetime.strptime(df.iloc[0, 1].split()[-1], "%d/%m/%Y")
             end_date = datetime.strptime(end_date_str, "%d-%m-%Y")
             df.to_csv(output_file, mode='a', index=False, header=not file_exists)
             file_exists = True
             if flight_date.date() >= end_date.date():
-                logging.info("✅ Finished crawling until end date!")
+                logging.info("Finished crawling until end date!")
                 break
         choose_next_day(driver)
     driver.quit()
+    del driver
+
+def choose_datetime(now=None, num_month=1):
+    if now is None:
+        now = datetime.now()
+    else:
+        now = datetime.strptime(now, "%d-%m-%Y")
+        print(now.strftime("%d_%m_%Y"))
+    return (now.strftime("%d-%m-%Y"), ((now + relativedelta(months=num_month)).replace(day=1) - relativedelta(days=1)).strftime("%d-%m-%Y"))
+    # return (now.strftime("%d-%m-%Y"), ((now + relativedelta(days=5))).strftime("%d-%m-%Y"))
 
 if __name__ == "__main__":
-    args = parse_args()
     setup_logger(log_dir="logs")
-    driver = init_driver(driver_path="/usr/local/bin/chromedriver", headless=args.headless)
-    url = "https://www.abay.vn"
+    start_date_str, end_date_str = choose_datetime(now= "15-8-2025" ,num_month=3)
+    craw_pipeline(departure="SGN",
+                  destination="DAD",
+                  date_str=start_date_str,
+                  end_date_str=end_date_str,
+                  save_dir="data/raw")
 
-    craw_pipeline(driver=driver,
-                  url=url,
-                  departure=args.departure,
-                  destination=args.destination,
-                  date_str=args.start_date,
-                  end_date_str=args.end_date,
-                  save_dir=args.save_dir)
+    craw_pipeline(departure="SGN",
+                  destination="HAN",
+                  date_str=start_date_str,
+                  end_date_str=end_date_str,
+                  save_dir="data/raw")
     
-#    PYTHONPATH=. python src/crawler/abay_form_oneway.py --departure SGN --destination DAD --start_date 01-04-2025 --end_date 30-06-2025 --save_dir data/clean --headless
-#    PYTHONPATH=. python src/crawler/abay_form_oneway.py --departure SGN --destination HAN --start_date 01-04-2025 --end_date 30-06-2025 --save_dir data/clean --headless
-#    PYTHONPATH=. python src/crawler/abay_form_oneway.py --departure VII --destination HAN --start_date 01-04-2025 --end_date 30-06-2025 --save_dir data/clean --headless
+    # args = parse_args()
+    # setup_logger(log_dir="logs")
+    # driver = init_driver(driver_path="/usr/local/bin/chromedriver", headless=args.headless)
+    # url = "https://www.abay.vn"
 
-
+    # craw_pipeline(driver=driver,
+    #               url=url,
+    #               departure=args.departure,
+    #               destination=args.destination,
+    #               date_str=args.start_date,
+    #               end_date_str=args.end_date,
+    #               save_dir=args.save_dir)
     
+#    PYTHONPATH=. python src/crawler/abay_form_oneway.py --departure SGN --destination DAD --start_date 01-04-2025 --end_date 30-06-2025 --save_dir data/raw --headless
+#    PYTHONPATH=. python src/crawler/abay_form_oneway.py --departure SGN --destination HAN --start_date 01-04-2025 --end_date 30-06-2025 --save_dir data/raw --headless
+#    PYTHONPATH=. python src/crawler/abay_form_oneway.py --departure VII --destination HAN --start_date 01-04-2025 --end_date 30-06-2025 --save_dir data/raw --headless

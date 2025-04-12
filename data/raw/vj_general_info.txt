@@ -1,9 +1,0 @@
-Name: VietJetAir
-Phone: 011 84 1900 1886
-Address: Headquarters: 530 Nhat Tao, District 11, Ho Chi Minh City Vietnam
-Website: http://www.vietjetair.com/
-Average Rating: 2.0
-Total Review: 6,909 reviews
-Popular Mention: ['budget airline', 'chiang rai', 'low cost airline', 'bad reviews', 'low budget']
-Attributes: {'Legroom': '2.5 of 5 bubbles', 'Seat comfort': '2.5 of 5 bubbles', 'In-flight entertainment (WiFi, TV, movies)': '1.5 of 5 bubbles', 'Onboard Experience': '2.5 of 5 bubbles', 'Customer service': '2.5 of 5 bubbles', 'Value for money': '2.5 of 5 bubbles', 'Cleanliness': '3.0 of 5 bubbles', 'Check-in and boarding': '2.5 of 5 bubbles'}
-Total Rating: {'Excellent': '632', 'Good': '948', 'Average': '731', 'Poor': '573', 'Terrible': '4,035'}

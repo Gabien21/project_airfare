@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import logging
 import ast
+import json
 from dotenv import load_dotenv
 from src.utils.logger_utils import setup_logger
 from sqlalchemy import create_engine
@@ -13,16 +14,16 @@ load_dotenv()
 
 # Define input/output paths from environment variables
 RAW_PATH = os.getenv("RAW_PATH", "data/raw")
-CLEAN_PATH = os.getenv("CLEAN_PATH", "data/clean")
+CLEAN_PATH = os.getenv("CLEAN_PATH", "data/clean/flight_prices")
 os.makedirs(CLEAN_PATH, exist_ok=True)
 
-def extract():
+def extract(datadir=None):
     """
     Extract raw flight data from CSV files for routes SGN to HAN and SGN to DAD.
     """
-    logging.info("📥 Extracting data from source files...")
-    df_to_han = pd.read_csv(os.path.join(RAW_PATH, "flight_prices_SGN_to_HAN.csv"))
-    df_to_dad = pd.read_csv(os.path.join(RAW_PATH, "flight_prices_SGN_to_DAD.csv"))
+    logging.info("Extracting data from source files...")
+    df_to_han = pd.read_csv(os.path.join(datadir, "flight_prices_SGN_to_HAN.csv"))
+    df_to_dad = pd.read_csv(os.path.join(datadir, "flight_prices_SGN_to_DAD.csv"))
     logging.debug(f"Loaded {len(df_to_han)} rows from SGN to HAN")
     logging.debug(f"Loaded {len(df_to_dad)} rows from SGN to DAD")
     return df_to_han, df_to_dad
@@ -170,7 +171,7 @@ def clean_data(df_to_han, df_to_dad):
     - Extract airline, flight code, fare class
     - Clean prices, time columns, aircraft, baggage, refund, and locations
     """
-    logging.info("🧹 Starting transformation pipeline (cleaning)...")
+    logging.info("Starting transformation pipeline (cleaning)...")
 
     df = merge_flight_routes(df_to_han, df_to_dad)
     logging.debug(f"Merged total rows: {len(df)}")
@@ -208,7 +209,7 @@ def normalize_tables(df):
     - flight_schedule_df: Dimension table for individual flight schedule
     - ticket_df: Fact table for tickets and pricing
     """
-    logging.info("📊 Normalizing data into schema tables...")
+    logging.info("Normalizing data into schema tables...")
 
 
     logging.debug("Generating AIRPORT table...")
@@ -245,7 +246,7 @@ def normalize_tables(df):
 
     logging.debug("Generating TICKET table...")
     ticket_df = tmp_df.drop(columns=[
-        'Departure Time', 'Flight Code', 'Flight Duration', 'Arrival Time', 'Aircraft Type'
+       'Arrival Location Code', 'Flight Duration', 'Arrival Time', 'Aircraft Type'
     ]).drop_duplicates().reset_index(drop=True)
 
     return airport_df, airline_df, refund_policy_df, flight_schedule_df, ticket_df
@@ -257,11 +258,11 @@ def transform(df_to_han, df_to_dad):
     - Clean data
     - Generate normalized dimension & fact tables
     """
-    logging.info("🔄 Starting transformation process...")
+    logging.info("Starting transformation process...")
     df = clean_data(df_to_han, df_to_dad)
     airport_df, airline_df, refund_policy_df, flight_schedule_df, ticket_df = normalize_tables(df)
 
-    logging.info("✅ Transformation completed.")
+    logging.info("Transformation completed.")
     return df, airport_df, airline_df, refund_policy_df, flight_schedule_df, ticket_df
 
 
@@ -275,34 +276,73 @@ def insert_into_sql_server(df, driver, server, database, username, password, mod
     dtype = {}
     for col in df.columns:
         if df[col].dtype == 'object':
+            dtype[col] = sqlalchemy.types.NVARCHAR(length=100)
+        if col == 'Refund Policy':
             dtype[col] = sqlalchemy.types.NVARCHAR(length=1000)
 
     df.to_sql(name=table_name, con=engine, schema='dbo', if_exists=mode, index=False, dtype=dtype)
     logging.info(f"Inserted table '{table_name}' into SQL Server.")
 
+def load_options(path):
+    df = pd.read_csv(path, parse_dates=["Departure Time", "Arrival Time", "Scrape Time"])
+    df = df.select_dtypes(exclude=["datetime"])
+    cate_df = df.select_dtypes(include=["object"]).drop(columns=["Flight Code", "Refund Policy", "Fare Class"])
+    options_dict = {}
+    for col in cate_df.columns:
+        options_dict[col] = cate_df[col].dropna().unique().tolist()
+    
+    options_dict['Flight Duration'] = {"min": {}, "max": {}}
+    for i, j in df[['Arrival Location', 'Flight Duration']].groupby("Arrival Location")['Flight Duration'].aggregate(['min', 'max']).items():
+        for k in j.items():
+            options_dict['Flight Duration'][i][k[0]] = k[1]
 
-def load(df, airport_df, airline_df, refund_policy_df, flight_schedule_df, ticket_df):
+
+    options_dict['Refund Policy'] = {}
+    df['Refund Policy'] = df['Refund Policy'].apply(lambda x: ast.literal_eval(x) if not pd.isna(x) else []).explode("Refund Policy")
+    for (airline, fareclass), row in df.explode("Refund Policy").groupby(['Airline', 'Fare Class'])['Refund Policy'].unique().items():
+        if airline not in options_dict['Refund Policy']:
+            options_dict['Refund Policy'][airline] = {}
+        options_dict['Refund Policy'][airline][fareclass]= [v.replace("- ", "") if not pd.isna(v) else None for v in row]
+
+    options_dict['Baggage'] = {}
+    for (airline, fareclass), row in df.groupby(['Airline', 'Fare Class'])['Carry-on Baggage'].unique().items():
+        if airline not in options_dict['Baggage']:
+            options_dict['Baggage'][airline] = {}
+        if fareclass not in options_dict['Baggage'][airline].keys():
+            options_dict['Baggage'][airline][fareclass] = {}
+        options_dict['Baggage'][airline][fareclass]["carry_on"] = [r if not pd.isna(r) else None for r in row.tolist()]
+
+    for (airline, fareclass), row in df.groupby(['Airline', 'Fare Class'])['Checked Baggage'].unique().items():
+        if airline not in options_dict['Baggage']:
+            options_dict['Baggage'][airline] = {}
+        if fareclass not in options_dict['Baggage'][airline].keys():
+            options_dict['Baggage'][airline][fareclass] = {}
+        options_dict['Baggage'][airline][fareclass]["checked"] = [r if not pd.isna(r) else None for r in row.tolist()]
+    with open(os.path.join(os.path.dirname(os.path.dirname(path)), "options.json"), 'w', encoding="utf-8") as f:
+        json.dump(options_dict, f, ensure_ascii=False, indent=4)
+
+
+def load(df, airport_df, airline_df, refund_policy_df, flight_schedule_df, ticket_df, data_dir=None):
     """
     Load cleaned data to CSV files and insert into SQL Server database.
     """
 
     # Save combined cleaned data to CSV
-    combined_output_path = os.path.join(CLEAN_PATH, "flight_prices_combined_cleaned.csv")
+    os.makedirs(data_dir, exist_ok=True)
+    combined_output_path = os.path.join(data_dir, "flight_prices_combined_cleaned.csv")
     df.to_csv(combined_output_path, index=False)
+    load_options(combined_output_path)
     logging.info(f"Saved combined cleaned data to: {combined_output_path}")
 
-    # Create output directory
-    output_dir = os.path.join(CLEAN_PATH, "flight_prices")
-    os.makedirs(output_dir, exist_ok=True)
 
     # Save individual dimension/fact tables to CSV
-    airport_df.to_csv(os.path.join(output_dir, "airport.csv"), index=False)
-    airline_df.to_csv(os.path.join(output_dir, "airline.csv"), index=False)
-    refund_policy_df.to_csv(os.path.join(output_dir, "refund_policy.csv"), index=False)
-    flight_schedule_df.to_csv(os.path.join(output_dir, "flight_schedule.csv"), index=False)
-    ticket_df.to_csv(os.path.join(output_dir, "ticket.csv"), index=False)
+    airport_df.to_csv(os.path.join(data_dir, "airport.csv"), index=False)
+    airline_df.to_csv(os.path.join(data_dir, "airline.csv"), index=False)
+    refund_policy_df.to_csv(os.path.join(data_dir, "refund_policy.csv"), index=False)
+    flight_schedule_df.to_csv(os.path.join(data_dir, "flight_schedule.csv"), index=False)
+    ticket_df.to_csv(os.path.join(data_dir, "ticket.csv"), index=False)
 
-    logging.info(f"Saved all normalized tables to: {output_dir}")
+    logging.info(f"Saved all normalized tables to: {data_dir}")
 
     # Load to SQL Server
     server = os.getenv("DB_SERVER")
@@ -310,7 +350,7 @@ def load(df, airport_df, airline_df, refund_policy_df, flight_schedule_df, ticke
     username = os.getenv("DB_USER")
     password = os.getenv("DB_PASSWORD")
     driver = 17
-    mode = 'replace'  # Options: 'fail', 'replace', 'append'
+    mode = 'append'  # Options: 'fail', 'replace', 'append'
 
     insert_into_sql_server(airport_df, driver, server, database, username, password, mode, "AIRPORT")
     insert_into_sql_server(airline_df, driver, server, database, username, password, mode, "AIRLINE")
@@ -319,7 +359,7 @@ def load(df, airport_df, airline_df, refund_policy_df, flight_schedule_df, ticke
     insert_into_sql_server(ticket_df, driver, server, database, username, password, mode, "TICKET")
 
 
-def main():
+def ETL(data_dir=None):
     """
     Main ETL execution flow:
     - Extract raw flight data
@@ -331,13 +371,13 @@ def main():
 
     try:
         # Extract
-        df_to_han, df_to_dad = extract()
+        df_to_han, df_to_dad = extract(os.path.join(RAW_PATH, data_dir))
 
         # Transform
         df, airport_df, airline_df, refund_policy_df, flight_schedule_df, ticket_df = transform(df_to_han, df_to_dad)
 
-        # Load
-        load(df, airport_df, airline_df, refund_policy_df, flight_schedule_df, ticket_df)
+        # # Load
+        load(df, airport_df, airline_df, refund_policy_df, flight_schedule_df, ticket_df, os.path.join(CLEAN_PATH, data_dir))
 
         logging.info("=== ETL PROCESS COMPLETED SUCCESSFULLY ===")
         
@@ -346,4 +386,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    ETL(data_dir="31_03_2025")
