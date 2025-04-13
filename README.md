@@ -175,6 +175,63 @@ The app loads the trained model and encoders from the models/ folder and uses th
 - Streamlit / FastAPI for UI
 
 ## 4. Part 2 – Airline Review Sentiment Analysis
+### 4.1 Objective
+This module aims to analyze customer reviews of airlines to determine the sentiment behind each review—whether it is positive, negative, or neutral. By utilizing pre-trained model for sentiment analysis in HuggingFace, this analysis helps customers to understand more about airline service from previous passenger experience and can find the most suitable airline for themselves
+
+### 4.2 Dataset Description
+- Data Source: Crawled from [TripAdvisor.vn](https://www.tripadvisor.com/)
+- Collected Airlines: VietJetAir,, Vietnam Airlines, Bamboo Airways
+- Sample Fields:
+  - Overall
+    - Name, Phone, Address, Website, Average Rating, Total Review
+    - Popular Mention, Attributes, Total Rating
+  - Review
+    - Rating, Title, Full Review, Information
+    - Service Ratings
+
+### 4.3 Pipeline Components
+#### 4.3.1 Crawling
+- Script: [`src/crawler/airline_review.py`](src/crawler/airline_review.py)
+- Uses Selenium + undetected-chromedriver
+- Inputs: Airline Name (VJ, VNA, Bamboo)
+- Outputs: raw CSV files in data/raw/review/
+
+#### 4.3.2 ETL and Normalization
+- Script: [`src/etl/preprocessing_airline_review.py`](src/etl/preprocessing_airline_review.py)
+- Extracts and cleans all columns
+- Normalizes into:
+    - MENTION
+    - RATING
+    - AIRLINE_REVIEW
+    - INFO
+    - ATTRIBUTE
+    - REVIEW_SERVICE
+- Load data:
+    - Into SQL Server
+    - As csv files 
+
+#### 4.3.3 Sentiment Enrich
+- Script: [`src/modeling/sentiment_enrich.py`](src/modeling/sentiment_enrich.py)
+- Applies:
+    - Use Pre-Trained Model for Sentiment Classification Task to predict sentiment of each review
+
+### 4.4 Streamlit Airline Review Sentiment Analysis
+A simple Streamlit-based web app is also provided to demonstrate the model in action. It allows users to manually select the airline and see overall information and overall sentiment reaction about airline 
+
+To run the Streamlit app:
+```bash
+streamlit run src/api/app_sentiment.py
+```
+
+The app loads the trained model and encoders from the models/ folder and uses the same inference pipeline as the FastAPI backend.
+<!-- ![alt text](images/streamlit_interface.png) -->
+### 3.7 Technology Stack
+- Python, Pandas, NumPy
+- HuggingFace, Torch, Transformers
+- Selenium, undetected-chromedriver
+- SQL Server, SQLAlchemy, PyODBC
+- Streamlit 
+
 ## 5. Setup & Usage
 ### 5.1 Install environment
 ```bash

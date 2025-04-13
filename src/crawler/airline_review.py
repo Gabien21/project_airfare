@@ -113,7 +113,7 @@ def extract_reviews_1page(soup, page_number):
             rating = review_element.find("svg", class_="UctUV d H0").text if review_element.find("svg", class_="UctUV d H0") else ''
             title = review_element.find("div", class_="biGQs _P fiohW uuBRH").text if review_element.find("div", class_="biGQs _P fiohW uuBRH") else ''
             full_review = review_element.find("span", class_="JguWG").text if review_element.find("span", class_="JguWG") else ''
-            information = review_element.find_all("div", class_="biGQs _P pZUbB hmDzD")[1].text if len(review_element.find_all("div", class_="biGQs _P pZUbB hmDzD")) > 1 else None
+            information = review_element.find("div", class_="biGQs _P pZUbB ncFvv osNWb").text if review_element.find("div", class_="biGQs _P pZUbB ncFvv osNWb") else ''
 
             review_dict = {
                 "Rating": rating,
@@ -185,7 +185,7 @@ def main(driver, airline_name, save_dir):
         url = "https://www.tripadvisor.com/Airline_Review-d8729180-Reviews-Vietnam-Airlines"
     elif airline_name.lower() == 'vj' :
         url = "https://www.tripadvisor.com/Airline_Review-d8728891-Reviews-VietJetAir"
-    elif airline_name.lower() == 'bam': 
+    elif airline_name.lower() == 'bamboo': 
         url = "https://www.tripadvisor.com/Airline_Review-d17550096-Reviews-Bamboo-Airways"
     else :
         logging.info(f"Cannot find review about airline: {airline_name}")
@@ -217,9 +217,9 @@ if __name__ == "__main__":
                   save_dir=args.save_dir,
                   )
     
-#    PYTHONPATH=. python src/crawler/airline_review.py --airline VJ --driver_path "../chromedriver-win64/chromedriver.exe" --save_dir data/raw --headless
-#    PYTHONPATH=. python src/crawler/airline_review.py --driver_path VNA "../chromedriver-win64/chromedriver.exe" --save_dir data/raw --headless
-#    PYTHONPATH=. python src/crawler/airline_review.py --driver_path Bam"../chromedriver-win64/chromedriver.exe" --save_dir data/raw --headless
+#    PYTHONPATH=. python src/crawler/airline_review.py --airline VJ --driver_path "../chromedriver-win64/chromedriver.exe" --save_dir data/raw/review --headless
+#    PYTHONPATH=. python src/crawler/airline_review.py --airline VNA --driver_path "../chromedriver-win64/chromedriver.exe" --save_dir data/raw --headless
+#    PYTHONPATH=. python src/crawler/airline_review.py --airline Bamboo --driver_path "../chromedriver-win64/chromedriver.exe" --save_dir data/raw --headless
 
 
-    
+    # python -m src.crawler.airline_review --airline Bamboo --driver_path "../chromedriver-win64/chromedriver.exe" --save_dir data/raw/review
