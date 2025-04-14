@@ -15,7 +15,7 @@
   - [3.5 FastAPI](#37-fastapi)
   - [3.6 Streamlit Airfare Prediction App](#38-streamlit-airfare-prediction-app)
   - [3.7 Technology Stack](#39-technology-stack)
-- [4. Part 2 – Airline Review Sentiment Analysis](#4-part-2--airline-review-sentiment-analysis)
+- [4. Part 2 – Airline Review Sentiment Analysis + Flight Ticket Price Dashboard](#4-part-2--airline-review-sentiment-analysis--flight-ticket-price-dashboard)
 - [5. Setup & Usage](#5-setup--usage)
   - [5.1 Install environment](#51-install-environment)
   - [5.2 Run pipeline](#52-run-pipeline)
@@ -32,6 +32,7 @@ The system includes web crawling, ETL (Extract, Transform, Load), model training
 ## 2. Project Architecture & Folder Structure
 ```
 .
+├── dashboard/            # PowerBi Dashboard
 ├── data/                 # Raw, cleaned, and modeling data
 │   ├── clean/            # Clean data
 │   ├── data_for_modeling/# Data used to model
