@@ -174,7 +174,7 @@ The app loads the trained model and encoders from the models/ folder and uses th
 - SQL Server, SQLAlchemy, PyODBC
 - Streamlit / FastAPI for UI
 
-## 4. Part 2 – Airline Review Sentiment Analysis
+## 4. Part 2 – Airline Review Sentiment Analysis + Flight Ticket Price Dashboard
 ### 4.1 Objective
 This module aims to analyze customer reviews of airlines to determine the sentiment behind each review—whether it is positive, negative, or neutral. By utilizing pre-trained model for sentiment analysis in HuggingFace, this analysis helps customers to understand more about airline service from previous passenger experience and can find the most suitable airline for themselves
 
@@ -223,14 +223,21 @@ To run the Streamlit app:
 streamlit run src/api/app_sentiment.py
 ```
 
-The app loads the trained model and encoders from the models/ folder and uses the same inference pipeline as the FastAPI backend.
-<!-- ![alt text](images/streamlit_interface.png) -->
-### 3.7 Technology Stack
+The app loads data from Database (SQL Server) and shows users overall information and overall sentiemnt review from customer about airline
+![app_sentiment_1](images/streamlit_sentiment_1.png)
+![app_sentiment_2](images/streamlit_sentiment_2.png)
+
+### 4.5 Dashboard
+![dashboard](images/dashboard.png)
+
+### 4.6 Technology Stack
 - Python, Pandas, NumPy
-- HuggingFace, Torch, Transformers
+- Torch, Transformers
 - Selenium, undetected-chromedriver
 - SQL Server, SQLAlchemy, PyODBC
 - Streamlit 
+- PowerBI
+
 
 ## 5. Setup & Usage
 ### 5.1 Install environment

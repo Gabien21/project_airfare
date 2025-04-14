@@ -75,28 +75,30 @@ st.title("✈️ Airline Information and Sentiment")
 
 airline_selected = st.selectbox("Select Airline", ("VietJetAir", "Vietnam Airlines", "Bamboo Airways"))
 if airline_selected: 
-    st.header(f"Airline General Information")
-    airline_id = get_id_from_db(airline_selected)
+    col1, col2 = st.columns(2)
 
-    airline_data = get_airline_info(airline_id)
-    airline_review = get_airline_review(airline_id)
-    airline_mention = get_airline_mention(airline_id)
-    airline_rating = get_airline_rating(airline_id)
-    airline_review_service = get_airline_review_service(airline_id)
-    airline_attribute = get_airline_attribute(airline_id)
+    with col1:
+        st.header("Airline General Information")
+        airline_id = get_id_from_db(airline_selected)
 
-    st.write(f"Name: ", airline_data['name'][0])
-    st.write(f"Phone: ", airline_data['phone'][0])
-    st.write(f"Address: ", airline_data['address'][0])
-    st.write(f"Website: ", airline_data['website'][0])
-    st.write(f"Average Rating: ", airline_data['averating_rating'][0])
-    st.write(f"Total Review: ", airline_data['total_review'][0])
+        airline_data = get_airline_info(airline_id)
+        airline_review = get_airline_review(airline_id)
+        airline_mention = get_airline_mention(airline_id)
+        airline_rating = get_airline_rating(airline_id)
+        airline_review_service = get_airline_review_service(airline_id)
+        airline_attribute = get_airline_attribute(airline_id)
 
+        st.write(f"Name: ", airline_data['name'][0])
+        st.write(f"Phone: ", airline_data['phone'][0])
+        st.write(f"Address: ", airline_data['address'][0])
+        st.write(f"Website: ", airline_data['website'][0])
+        st.write(f"Average Rating: ", airline_data['averating_rating'][0])
+        st.write(f"Total Review: ", airline_data['total_review'][0])
 
-    st.header("Overview Attribute")
-    for _, row in airline_attribute.iterrows():
-        st.write(f"{row['attribute_name']}: ",display_star_rating(row['rating']))
-
+    with col2:
+        st.header("Overview Attribute")
+        for _, row in airline_attribute.iterrows():
+            st.write(f"{row['attribute_name']}: ", display_star_rating(row['rating']))
     
 
 
