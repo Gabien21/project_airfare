@@ -150,7 +150,6 @@ def transform(df):
 # ========================== Main Entry Point ==========================
 def preprocess_for_modeling():
     """Main function to extract and preprocess data, saving the result to CSV."""
-    setup_logger(log_dir="logs")
     logging.info("Starting preprocessing for model training...")
     df, *_ = load_data()
     
@@ -165,4 +164,5 @@ def preprocess_for_modeling():
     logging.info(f"Final dataset saved to: {output_path}")
 
 if __name__ == "__main__":
+    setup_logger(log_dir="logs")
     preprocess_for_modeling()

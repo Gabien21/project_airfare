@@ -16,3 +16,4 @@ pyodbc
 beautifulsoup4
 selenium
 undetected-chromedriver
+tqdm

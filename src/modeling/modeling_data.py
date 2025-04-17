@@ -222,7 +222,6 @@ def load_data():
 # ========================== Main Pipeline ==========================
 def model_data():
     """Main function to run model selection, tuning, and evaluation."""
-    setup_logger(log_dir="logs")
     logging.info("Starting model training pipeline...")
     df, scaler, label_binarizer = load_data()
     X = df.drop(columns=['Total_Price'])
@@ -236,11 +235,12 @@ def model_data():
     model_name = selector.get_best_model()['model_name']
     logging.info(f"Best model from CV: {model_name}")
 
-    best_model = model_finetuning(best_model, X_train, y_train, X_val, y_val, model_name=model_name)
+    # best_model = model_finetuning(best_model, X_train, y_train, X_val, y_val, model_name=model_name)
     best_model = model_final_training_and_testing(best_model, scaler, pd.concat([X_train, X_val]), pd.concat([y_train, y_val]), X_test, y_test)
 
     joblib.dump(best_model, os.path.join(MODEL_DIR, "final_best_model.pkl"))
     logging.info("Final model saved successfully.")
 
 if __name__ == "__main__":
+    setup_logger(log_dir="logs")
     model_data()

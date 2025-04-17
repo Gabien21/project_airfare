@@ -366,7 +366,6 @@ def ETL(data_dir=None):
     - Transform and normalize
     - Load to CSV and SQL Server
     """
-    setup_logger(log_dir="logs")
     logging.info("=== STARTING ETL PROCESS ===")
 
     try:
@@ -386,4 +385,5 @@ def ETL(data_dir=None):
 
 
 if __name__ == "__main__":
+    setup_logger(log_dir="logs")
     ETL(data_dir="31_03_2025")

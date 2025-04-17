@@ -43,6 +43,7 @@ The system includes web crawling, ETL (Extract, Transform, Load), model training
 .
 ├── dashboard/            # PowerBi Dashboard
 ├── data/                 # Raw, cleaned, and modeling data
+├── airflow_dags/                 # Dags for data pipeline automation
 │   ├── clean/            # Clean data
 │   ├── data_for_modeling/# Data used to model
 │   └── raw/              # Raw data
@@ -117,6 +118,11 @@ This module aims to predict the total price of a flight ticket based on various 
 - Predicts total price based on user input
 - Supports integration into web apps (Streamlit / FastAPI)
 
+#### 3.3.6 Automated Data Pipeline
+- Script: [`airflow_dags/airfare_pipeline.py`](airflow_dags/airfare_pipeline.py)
+- Loads model + encoders + scalers
+- Dag for data pipeline from crawling to preprocessing and training models
+
 ### 3.4 Automation and Cron Setup
 - Script: [`run_flight_prices_pipeline.py`](run_flight_prices_pipeline.py)
 - All steps are executed in one command:
@@ -183,6 +189,7 @@ The app loads the trained model and encoders from the models/ folder and uses th
 - Selenium, undetected-chromedriver
 - SQL Server, SQLAlchemy, PyODBC
 - Streamlit / FastAPI for UI
+- Apache Airflow
 
 ## 4. Part 2 – Airline Review Sentiment Analysis + Flight Ticket Price Dashboard
 ### 4.1 Objective
